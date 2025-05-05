@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create_payment_table" author="cool_developer">
+        <createTable tableName="payment">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_cash_table" author="cool_developer">
+        <createTable tableName="cash_payment">
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_cash_payment"
+                             references="payment(id)" primaryKey="true"/>
+            </column>
+            <column name="cash_tendered" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_check_table" author="cool_developer">
+        <createTable tableName="check_payment">
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_check_payment"
+                             references="payment(id)" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_credit_payment_table" author="cool_developer">
+        <createTable tableName="credit_payment">
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_credit_payment"
+                             references="payment(id)" primaryKey="true"/>
+            </column>
+            <column name="number" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exp_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
